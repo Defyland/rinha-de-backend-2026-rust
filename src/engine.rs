@@ -279,6 +279,37 @@ mod tests {
         }
     }
 
+    fn official_fraud_request() -> FraudScoreRequest {
+        FraudScoreRequest {
+            id: "tx-3330991687".to_string(),
+            transaction: Transaction {
+                amount: 9505.97,
+                installments: 10,
+                requested_at: "2026-03-14T05:15:12Z".to_string(),
+            },
+            customer: Customer {
+                avg_amount: 81.28,
+                tx_count_24h: 20,
+                known_merchants: vec![
+                    "MERC-008".to_string(),
+                    "MERC-007".to_string(),
+                    "MERC-005".to_string(),
+                ],
+            },
+            merchant: Merchant {
+                id: "MERC-068".to_string(),
+                mcc: "7802".to_string(),
+                avg_amount: 54.86,
+            },
+            terminal: Terminal {
+                is_online: false,
+                card_present: true,
+                km_from_home: 952.27,
+            },
+            last_transaction: None,
+        }
+    }
+
     #[test]
     fn vectorizes_the_official_legit_example() {
         let engine = engine_with_references(vec![ReferencePoint {
@@ -304,6 +335,26 @@ mod tests {
             0.0,
             0.15,
             0.006025,
+        ];
+
+        for (actual, expected) in vector.iter().zip(expected.iter()) {
+            assert!((actual - expected).abs() < 0.0005);
+        }
+    }
+
+    #[test]
+    fn vectorizes_the_official_fraud_example() {
+        let engine = engine_with_references(vec![ReferencePoint {
+            vector: [0.0; 14],
+            label: Label::Legit,
+        }]);
+
+        let vector = engine
+            .vectorize(&official_fraud_request())
+            .expect("vectorization should succeed");
+        let expected = [
+            0.950597, 0.8333333, 1.0, 0.2173913, 0.8333333, -1.0, -1.0, 0.95227, 1.0, 0.0, 1.0,
+            1.0, 0.75, 0.005486,
         ];
 
         for (actual, expected) in vector.iter().zip(expected.iter()) {

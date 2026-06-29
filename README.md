@@ -42,6 +42,7 @@ Supporting docs:
 
 - [docs/architecture/overview.md](docs/architecture/overview.md)
 - [docs/adr/0001-exact-knn-baseline.md](docs/adr/0001-exact-knn-baseline.md)
+- [docs/verification/vectorization-proof.md](docs/verification/vectorization-proof.md)
 
 ## How to run in 5 minutes
 
@@ -143,5 +144,6 @@ What is intentionally still not final:
 
 - [docs/architecture/overview.md](docs/architecture/overview.md)
 - [docs/adr/0001-exact-knn-baseline.md](docs/adr/0001-exact-knn-baseline.md)
+- [docs/verification/vectorization-proof.md](docs/verification/vectorization-proof.md)
 - [docs/examples/legit-request.json](docs/examples/legit-request.json)
 - [docs/examples/fraud-request.json](docs/examples/fraud-request.json)

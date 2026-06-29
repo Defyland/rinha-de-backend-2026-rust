@@ -1,0 +1,110 @@
+openapi: 3.1.0
+info:
+  title: Rinha de Backend 2026 Rust
+  version: 0.1.0
+servers:
+  - url: http://localhost:9999
+paths:
+  /ready:
+    get:
+      summary: Readiness probe
+      responses:
+        "200":
+          description: Service is ready.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  references_loaded:
+                    type: integer
+                  reference_source:
+                    type: string
+  /fraud-score:
+    post:
+      summary: Score a transaction with official Rinha 2026 rules
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FraudScoreRequest"
+      responses:
+        "200":
+          description: Exact k-NN decision
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FraudScoreResponse"
+components:
+  schemas:
+    FraudScoreRequest:
+      type: object
+      required: [id, transaction, customer, merchant, terminal]
+      properties:
+        id:
+          type: string
+        transaction:
+          type: object
+          required: [amount, installments, requested_at]
+          properties:
+            amount:
+              type: number
+            installments:
+              type: integer
+            requested_at:
+              type: string
+              format: date-time
+        customer:
+          type: object
+          required: [avg_amount, tx_count_24h, known_merchants]
+          properties:
+            avg_amount:
+              type: number
+            tx_count_24h:
+              type: integer
+            known_merchants:
+              type: array
+              items:
+                type: string
+        merchant:
+          type: object
+          required: [id, mcc, avg_amount]
+          properties:
+            id:
+              type: string
+            mcc:
+              type: string
+            avg_amount:
+              type: number
+        terminal:
+          type: object
+          required: [is_online, card_present, km_from_home]
+          properties:
+            is_online:
+              type: boolean
+            card_present:
+              type: boolean
+            km_from_home:
+              type: number
+        last_transaction:
+          oneOf:
+            - type: "null"
+            - type: object
+              required: [timestamp, km_from_current]
+              properties:
+                timestamp:
+                  type: string
+                  format: date-time
+                km_from_current:
+                  type: number
+    FraudScoreResponse:
+      type: object
+      required: [approved, fraud_score]
+      properties:
+        approved:
+          type: boolean
+        fraud_score:
+          type: number

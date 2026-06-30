@@ -1,6 +1,6 @@
 # Rinha de Backend 2026 Rust
 
-[![CI](https://github.com/Defyland/rinha-de-backend-2026-rust/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Defyland/rinha-de-backend-2026-rust/actions/workflows/ci.yml)
+[![CI](https://github.com/Defyland/rinha-de-backend-2026-rust/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Defyland/rinha-de-backend-2026-rust/actions/workflows/ci.yml)
 
 Rust reference slice for the [Rinha de Backend 2026](https://github.com/zanfranceschi/rinha-de-backend-2026) fraud-scoring challenge.
 
@@ -147,3 +147,11 @@ What is intentionally still not final:
 - [docs/verification/vectorization-proof.md](docs/verification/vectorization-proof.md)
 - [docs/examples/legit-request.json](docs/examples/legit-request.json)
 - [docs/examples/fraud-request.json](docs/examples/fraud-request.json)
+
+## License
+
+This repository is published under the MIT License. See
+[LICENSE.txt](LICENSE.txt).
+
+That keeps the exact-baseline implementation and its verification notes
+reusable for study and internal experimentation.

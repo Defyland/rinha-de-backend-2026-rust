@@ -13,3 +13,6 @@ thiserror = "2"
 time = { version = "0.3", features = ["parsing"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal"] }
 tower = { version = "0.5", features = ["util"] }
+
+[dev-dependencies]
+proptest = "1"
